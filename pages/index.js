@@ -2,19 +2,24 @@ import React, { useState, useEffect } from "react";
 import Lottie from "react-lottie";
 import "react-awesome-slider/dist/styles.css";
 import { loaderOptions } from "../lotties";
-import { getHome } from "../cms";
+import { getHome, getNavbar } from "../cms";
 import { resolveSlideshow, resolveRail } from "../functions";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { pathOr } from "ramda";
+import NavigationBar from "../Components/NavigationBar";
+import CTACards from "../Components/CTACards";
 
-export default function Home({ data }) {
+export default function Home({ data, navBar }) {
+  const ctaCards = pathOr([], ["cta_cards"], data);
+  const navTitle = pathOr("", ["title"], navBar);
+  const navItems = pathOr([], ["nav_items"], navBar);
+  const navDropdowns = pathOr([], ["nav_dropdowns"], navBar);
   const rails = pathOr([], ["rails"], data);
   const slideshow = pathOr(undefined, ["slideshow"], data);
   const backgroundColor = pathOr("none", ["background_color", "hex"], data);
   const autoplay = pathOr(false, ["slideshow", "autoplay"], data);
   const slideshowMedia = pathOr([], ["slideshow", "media"], data);
-  ``;
   const slideshowTitle = pathOr([], ["slideshow", "title"], data);
 
   return (
@@ -23,11 +28,17 @@ export default function Home({ data }) {
         <title>App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <main className={styles.main}>
+        <NavigationBar
+          title={navTitle}
+          navItems={navItems}
+          navDropdowns={navDropdowns}
+        />
         {data ? (
           <div>
             {slideshow &&
               resolveSlideshow(slideshowTitle, autoplay, slideshowMedia)}
+            <CTACards cards={ctaCards} />
             {rails[0] &&
               rails.map((rail) => (
                 <div key={rail.id}>
@@ -48,10 +59,12 @@ export default function Home({ data }) {
 
 export async function getStaticProps() {
   const data = await getHome();
+  const navBar = await getNavbar();
 
   return {
     props: {
       data,
+      navBar,
     },
   };
 }
