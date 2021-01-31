@@ -11,8 +11,10 @@ export const getSlideshowPaths = (media) => {
 
 export const getRailPaths = (media) => {
   const paths = media.map((image) => {
+    const id = pathOr(undefined, ["id"], image);
     const url = pathOr("", ["formats", "large", "url"], image);
     return {
+      id,
       src: url ? prodCMS + url : url,
     };
   });
