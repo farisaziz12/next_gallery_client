@@ -45,11 +45,7 @@ export const resolveRail = (media) => {
       <FadeIn delay={400}>
         <div className={styles["gallery"]}>
           {images.map((image) => (
-            <img
-              src={image.src}
-              key={image.src}
-              onClick={() => console.log(image.id)}
-            />
+            <img src={image.src} key={image.src} onClick={() => console.log(image.id)} />
           ))}
         </div>
       </FadeIn>

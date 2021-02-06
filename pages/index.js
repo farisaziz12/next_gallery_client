@@ -52,18 +52,9 @@ export default function Home({ data, navBar }) {
   );
 }
 
-export async function getStaticProps() {
-  try {
-    const data = await getHome();
-    const navBar = await getNavbar();
+Home.getInitialProps = async () => {
+  const data = await getHome();
+  const navBar = await getNavbar();
 
-    return {
-      props: {
-        data,
-        navBar,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-  }
-}
+  return { data, navBar };
+};
