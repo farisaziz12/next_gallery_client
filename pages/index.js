@@ -29,15 +29,10 @@ export default function Home({ data, navBar }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <NavigationBar
-          title={navTitle}
-          navItems={navItems}
-          navDropdowns={navDropdowns}
-        />
+        <NavigationBar title={navTitle} navItems={navItems} navDropdowns={navDropdowns} />
         {data ? (
           <div>
-            {slideshow &&
-              resolveSlideshow(slideshowTitle, autoplay, slideshowMedia)}
+            {slideshow && resolveSlideshow(slideshowTitle, autoplay, slideshowMedia)}
             <CTACards cards={ctaCards} />
             {rails[0] &&
               rails.map((rail) => (
@@ -58,13 +53,17 @@ export default function Home({ data, navBar }) {
 }
 
 export async function getStaticProps() {
-  const data = await getHome();
-  const navBar = await getNavbar();
+  try {
+    const data = await getHome();
+    const navBar = await getNavbar();
 
-  return {
-    props: {
-      data,
-      navBar,
-    },
-  };
+    return {
+      props: {
+        data,
+        navBar,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
