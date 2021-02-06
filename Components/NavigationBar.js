@@ -18,8 +18,8 @@ export default function NavigationBar({ title, navItems, navDropdowns }) {
           Home
         </Menu.Item>
         {navItems.map((item) => {
-          const name = pathOr("", ["route", "name"], item);
-          const path = pathOr("", ["route", "path"], item);
+          const name = pathOr("", ["name"], item);
+          const path = pathOr("", ["path"], item);
           return (
             <Menu.Item key={name} onClick={() => router.push(path)}>
               {name}
