@@ -1,6 +1,9 @@
 export const prodCMS = "http://157.230.113.206";
 import { pathOr } from "ramda";
 import { get } from "../functions";
+import { Menu } from "antd";
+
+const { SubMenu } = Menu;
 
 export const resolveURL = (path) => {
   return prodCMS + path;

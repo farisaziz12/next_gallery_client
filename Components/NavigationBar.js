@@ -27,21 +27,22 @@ export default function NavigationBar({ title, navItems, navDropdowns }) {
           );
         })}
 
-        {navDropdowns.map((dropdown) => {
-          const [routes, setRoutes] = useState([]);
-          resolveDropdown(dropdown.id).then(setRoutes);
-          return (
-            <SubMenu
-              title={<span className="submenu-title-wrapper">{dropdown.title}</span>}
-            >
-              {routes.map((route) => (
-                <Menu.Item key={route.name} onClick={() => router.push(route.path)}>
-                  {route.name}
-                </Menu.Item>
-              ))}
-            </SubMenu>
-          );
-        })}
+        {/* {navDropdowns.map((dropdown) => {
+          resolveDropdown(dropdown.id).then((data) => {
+            return (
+              <SubMenu
+                title={<span className="submenu-title-wrapper">{dropdown.title}</span>}
+              >
+                {}
+                  data.routes.map((route) => (
+                    <Menu.Item key={route.name} onClick={() => router.push(route.path)}>
+                      {route.name}
+                    </Menu.Item>
+                  ))}
+              </SubMenu>
+            );
+          });
+        })} */}
       </Menu>
     </div>
   );

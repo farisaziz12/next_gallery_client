@@ -20,7 +20,7 @@ export const resolveSlideshow = (
   const images = auto_media_select
     ? getSlideshowPaths(railMedias)
     : getSlideshowPaths(media);
-
+  console.log(images);
   return (
     <FadeIn>
       <div className={styles.slideshow}>

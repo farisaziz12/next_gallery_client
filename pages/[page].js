@@ -5,11 +5,12 @@ import { loaderOptions } from "../lotties";
 import { getPage, getNavbar } from "../cms";
 import { resolveSlideshow, resolveRail } from "../functions";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import { pathOr } from "ramda";
 import NavigationBar from "../Components/NavigationBar";
+import styles from "../styles/Home.module.css";
 
 export default function App({ page, navBar }) {
+  console.log(page);
   const navTitle = pathOr("", ["title"], navBar);
   const navItems = pathOr([], ["nav_items"], navBar);
   const navDropdowns = pathOr([], ["nav_dropdowns"], navBar);
@@ -28,7 +29,7 @@ export default function App({ page, navBar }) {
 
   return (
     <div
-      className={styles.container}
+      className={styles.main}
       style={{
         backgroundColor: backgroundColor,
       }}
@@ -39,11 +40,7 @@ export default function App({ page, navBar }) {
       </Head>
 
       <main className={styles.main}>
-        <NavigationBar
-          title={navTitle}
-          navItems={navItems}
-          navDropdowns={navDropdowns}
-        />
+        <NavigationBar title={navTitle} navItems={navItems} navDropdowns={navDropdowns} />
         {page ? (
           <div>
             {slideshow &&
