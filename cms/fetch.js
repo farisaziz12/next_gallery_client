@@ -1,5 +1,4 @@
-// export const prodCMS = "http://188.166.158.2";
-export const prodCMS = "http://acb1d30cb208.ngrok.io";
+export const prodCMS = "http://157.230.113.206";
 import { pathOr } from "ramda";
 import { get } from "../functions";
 
@@ -15,21 +14,21 @@ export const getMain = async () => {
 
 export const getHome = async () => {
   const data = await getMain();
-  const home = pathOr(undefined, ["page"], data);
+  const home = pathOr(null, ["page"], data);
 
   return home;
 };
 export const getPage = async (page) => {
   const data = await get(prodCMS + "/routes?path=/" + page);
 
-  const pageData = pathOr(undefined, [0, "page"], data);
+  const pageData = pathOr(null, [0, "page"], data);
 
   return pageData;
 };
 
 export const getNavbar = async () => {
   const data = await get(prodCMS + "/navbar");
-  const navBarData = pathOr(undefined, [0], data);
+  const navBarData = pathOr(null, [0], data);
 
   return navBarData;
 };
