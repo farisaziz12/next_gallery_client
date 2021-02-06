@@ -158,6 +158,40 @@
   object-position: -20% 0;
 }
 
+.cta-card-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100vw;
+}
+
+.cta-card-border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  margin-top: 1vw;
+  cursor: pointer;
+}
+
+.cta-card {
+  height: 150px;
+  width: 320px;
+  background-color: black;
+  font-size: 22px;
+  border: solid 5px black;
+  opacity: 0.5;
+}
+
+.cta-card-border h1 {
+  position: absolute;
+  font-family: "Big Shoulders Display", cursive;
+  color: white;
+  text-align: center;
+  z-index: 1;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;
