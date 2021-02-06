@@ -3,6 +3,10 @@ export const prodCMS = "http://localhost:1337";
 import { pathOr } from "ramda";
 import { get } from "../functions";
 
+export const resolveURL = (path) => {
+  return prodCMS + path;
+};
+
 export const getMain = async () => {
   const data = await get(prodCMS + "/main");
 
