@@ -28,7 +28,6 @@ export const getPage = async (page) => {
 
 export const getNavbar = async () => {
   const data = await get(prodCMS + "/navbar");
-  const navBarData = pathOr(null, [0], data);
 
-  return navBarData;
+  return data;
 };

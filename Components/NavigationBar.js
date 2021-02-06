@@ -28,15 +28,10 @@ export default function NavigationBar({ title, navItems, navDropdowns }) {
 
         {navDropdowns.map((dropdown) => (
           <SubMenu
-            title={
-              <span className="submenu-title-wrapper">{dropdown.title}</span>
-            }
+            title={<span className="submenu-title-wrapper">{dropdown.title}</span>}
           >
             {dropdown.routes.map((route) => (
-              <Menu.Item
-                key={route.name}
-                onClick={() => router.push(route.path)}
-              >
+              <Menu.Item key={route.name} onClick={() => router.push(route.path)}>
                 {route.name}
               </Menu.Item>
             ))}
