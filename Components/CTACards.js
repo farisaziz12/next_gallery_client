@@ -6,7 +6,6 @@ import { resolveURL } from "../cms";
 
 export default function CTACards({ cards }) {
   const router = useRouter();
-  console.log(cards);
   return (
     <div className={styles["cta-card-container"]}>
       {cards.map((card) => {

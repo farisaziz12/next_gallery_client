@@ -21,7 +21,7 @@ export default function Home({ data, navBar }) {
   const autoplay = pathOr(false, ["slideshow", "autoplay"], data);
   const slideshowMedia = pathOr([], ["slideshow", "media"], data);
   const slideshowTitle = pathOr([], ["slideshow", "title"], data);
-  console.log(navBar);
+
   return (
     <div className={styles.main} style={{ backgroundColor: backgroundColor }}>
       <Head>

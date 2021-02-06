@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { Menu } from "antd";
 import "antd/dist/antd.css";
 import styles from "../styles/Home.module.css";
 import { pathOr } from "ramda";
+import { resolveDropdown } from "../cms";
 
 const { SubMenu } = Menu;
 
@@ -26,17 +27,21 @@ export default function NavigationBar({ title, navItems, navDropdowns }) {
           );
         })}
 
-        {navDropdowns.map((dropdown) => (
-          <SubMenu
-            title={<span className="submenu-title-wrapper">{dropdown.title}</span>}
-          >
-            {dropdown.routes.map((route) => (
-              <Menu.Item key={route.name} onClick={() => router.push(route.path)}>
-                {route.name}
-              </Menu.Item>
-            ))}
-          </SubMenu>
-        ))}
+        {navDropdowns.map((dropdown) => {
+          const [routes, setRoutes] = useState([]);
+          resolveDropdown(dropdown.id).then(setRoutes);
+          return (
+            <SubMenu
+              title={<span className="submenu-title-wrapper">{dropdown.title}</span>}
+            >
+              {routes.map((route) => (
+                <Menu.Item key={route.name} onClick={() => router.push(route.path)}>
+                  {route.name}
+                </Menu.Item>
+              ))}
+            </SubMenu>
+          );
+        })}
       </Menu>
     </div>
   );

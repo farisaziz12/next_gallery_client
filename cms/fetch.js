@@ -31,3 +31,13 @@ export const getNavbar = async () => {
 
   return data;
 };
+
+export const resolveDropdown = async (id) => {
+  try {
+    const data = await get(prodCMS + "/nav-dropdowns/" + id);
+
+    return data.routes;
+  } catch (error) {
+    return [];
+  }
+};

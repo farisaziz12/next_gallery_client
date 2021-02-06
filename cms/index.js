@@ -1,1 +1,9 @@
-export { getMain, getHome, prodCMS, getPage, getNavbar, resolveURL } from "./fetch";
+export {
+  getMain,
+  getHome,
+  prodCMS,
+  getPage,
+  getNavbar,
+  resolveURL,
+  resolveDropdown,
+} from "./fetch";
