@@ -1,65 +1,69 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React, { useState, useEffect } from "react";
+import Lottie from "react-lottie";
+import "react-awesome-slider/dist/styles.css";
+import { loaderOptions } from "../lotties";
+import { getHome, getNavbar } from "../cms";
+import { resolveSlideshow, resolveRail } from "../functions";
+import Head from "next/head";
+import styles from "../styles/Home.module.css";
+import { pathOr } from "ramda";
+import NavigationBar from "../Components/NavigationBar";
+import CTACards from "../Components/CTACards";
 
-export default function Home() {
+export default function Home({ data, navBar }) {
+  const ctaCards = pathOr([], ["cta_cards"], data);
+  const navTitle = pathOr("", ["title"], navBar);
+  const navItems = pathOr([], ["nav_items"], navBar);
+  const navDropdowns = pathOr([], ["nav_dropdowns"], navBar);
+  const rails = pathOr([], ["rails"], data);
+  const slideshow = pathOr(undefined, ["slideshow"], data);
+  const backgroundColor = pathOr("none", ["background_color", "hex"], data);
+  const autoplay = pathOr(false, ["slideshow", "autoplay"], data);
+  const slideshowMedia = pathOr([], ["slideshow", "media"], data);
+  const slideshowTitle = pathOr([], ["slideshow", "title"], data);
+
   return (
-    <div className={styles.container}>
+    <div className={styles.main} style={{ backgroundColor: backgroundColor }}>
       <Head>
-        <title>Create Next App</title>
+        <title>App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        <NavigationBar title={navTitle} navItems={navItems} navDropdowns={navDropdowns} />
+        {data ? (
+          <div>
+            {slideshow && resolveSlideshow(slideshowTitle, autoplay, slideshowMedia)}
+            <CTACards cards={ctaCards} />
+            {rails[0] &&
+              rails.map((rail) => (
+                <div key={rail.id}>
+                  <h1>{rail.header}</h1>
+                  {resolveRail(rail.media)}
+                </div>
+              ))}
+          </div>
+        ) : (
+          <Lottie options={loaderOptions} height={400} width={400} />
+        )}
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      {data && <footer className={styles.footer}>Powered by Faris</footer>}
     </div>
-  )
+  );
+}
+
+export async function getStaticProps() {
+  try {
+    const data = await getHome();
+    const navBar = await getNavbar();
+
+    return {
+      props: {
+        data,
+        navBar,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+  }
 }
